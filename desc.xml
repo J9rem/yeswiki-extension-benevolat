@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<plugin name="wkbenevolat" version="0.1" active="1">
+<plugin name="benevolat" version="0.1" active="1">
   <author>Jérémy Dufraisse</author>
   <label>Bénévolat</label>
   <desc>Le plugin "Bénévolat" vous permet de créer et mettre à jour des pages et formulaires facilitant le suivi du bénévolat.</desc>
