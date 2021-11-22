@@ -1,0 +1,1 @@
+{{bazar id="{formId}" voirmenu="0" vue="saisir" }}

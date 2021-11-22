@@ -1,0 +1,9 @@
+parameters:
+  benevolat:
+    lists:
+      ListeMois_id: 'ListeMois'
+      ListeAnnees_id: 'ListeAnnees'
+    pages:
+      AjoutBenevolat_tag: 'AjoutBenevolat'
+      CreationProfilBenevole_tag: 'CreationProfilBenevole'
+      SuiviBenevolat_tag: 'SuiviBenevolat'

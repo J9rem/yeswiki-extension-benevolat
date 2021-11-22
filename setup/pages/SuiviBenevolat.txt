@@ -1,0 +1,6 @@
+=====Espace de gestion du bénévolat=====
+Ce tableau offre une vision générale du temps bénévole déployé dans ce projet. 
+Vous pouvez [[{CreationProfilBenevole} ajouter un bénévole]] ou [[{AjoutBenevolat} ajouter du temps bénévole]] à un bénévole existant.
+{{section visibility="@admins" nocontainer="1"}}
+Vous pouvez aussi [[{SuiviBenevolat}/gestionbenevolat gérer cette extension]] (réservé aux admins){{end elem="section"}}
+{{bazarliste id="{formId}" template="suivi_benevolat"}}

@@ -1,0 +1,7 @@
+titre***Bénévolat {{bf_benevole}} : {{bf_mois}} {{bf_annee}}***Titre***
+radiofiche***{linkedFormId}***Bénévole*** *** *** ***bf_benevole***tags***1*** ***Sélectionne le bénévole*** * *** * *** *** *** ***
+labelhtml***<a href="{linkedPageUrl}" class="btn btn-primary btn-xs">Ajouter un bénévole</a>*** *** ***
+liste***{ListeAnnees}***Année*** *** *** ***bf_annee*** ***1*** *** *** * *** * *** *** *** ***
+liste***{ListeMois}***Mois*** *** *** ***bf_mois*** ***1*** *** *** * *** * *** *** *** ***
+texte***bf_heures***Nombre d'heures bénévoles effectuées*** *** *** *** ***number***1*** *** *** * *** * *** *** *** ***
+textelong***bf_description***Description des activités*** ***4*** *** ***wiki***0*** *** *** * *** * *** *** *** ***

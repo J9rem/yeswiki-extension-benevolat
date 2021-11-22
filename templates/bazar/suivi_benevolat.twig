@@ -1,0 +1,95 @@
+{{ infoRes|raw }} {# affiche le nombre de résultats #}
+
+{% if selectedYearName %}
+  <h2>{{ selectedYearName }}</h2>
+  <a
+   href="{{ url({tag:''}) }}"
+   title="{{ _t('BENEVOLAT_SEE_ALL_YEARS') }}"
+   data-toogle="tooltip"
+   data-placement="bottom"
+   class="tn btn-info btn-xs"
+    >
+    <i class="fas fa-undo"></i> {{ _t('BENEVOLAT_SEE_ALL_YEARS') }}
+  </a>
+{% endif %}
+
+{# l'id doit être unique - dans le cas où il y a plusieurs tableaux sur la même page
+ , on utilise $param['nbbazarliste'] qui s'incrémente à chaque fois qu'on appelle bazarliste
+ pour différencier les différents tableaux table_1 table_2 #}
+
+<table id="table_{{ param.nbbazarliste}}" class="table table-condensed display">
+  <thead>
+    <tr>
+      {# Column title #}
+      {% for index,title in columnTitles %}
+        <th>
+          {% if columnLinks[index] %}
+            <a href="{{ columnLinks[index] }}">
+          {% endif %}
+            {{ title }}
+          {% if columnLinks[index] %}
+            </a>
+          {% endif %}
+        </th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for key,data in dataList %}
+      <tr>
+        {# Row title #}
+        <td>
+          <b>
+            <a href="{{ url({tag:key}) }}" class="modalbox" data-size="modal-lg">
+              {{ rowTitles[key] }}
+            </a>
+          </b>
+        </td>
+        {# Value for each column #}
+        {% for fieldName in columnFieldsIndex %}
+          <td {{ not dataLinks[key][fieldName] and data[fieldName] is defined ? 'class="benevolat-time"' : ''}}>
+            {% if dataLinks[key][fieldName] %}
+              <a href="{{ dataLinks[key][fieldName] }}" class="modalbox benevolat-time-link" data-size="modal-lg">
+            {% endif %}
+                {{ data[fieldName] }}
+            {% if dataLinks[key][fieldName] %}
+              </a>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a
+   href="{{ url({tag:ajoutBenevolat}) }}"
+   title="{{ _t('BENEVOLAT_ADD_TIME')|capitalize }}"
+   data-toogle="tooltip"
+   data-placement="bottom"
+   class="tn btn-info btn-xs"
+    >
+    <i class="fas fa-plus-circle"></i> {{ _t('BENEVOLAT_ADD_TIME')|capitalize }}
+</a>
+
+<hr >
+<div class="well">
+  {{ _t('BENEVOLAT_EXPLICATIONS_SUIVI')|nl2br|replace({
+    'https://www.associations.gouv.fr/guide-pratique-vie-associative.html':
+      '<a href="https://www.associations.gouv.fr/guide-pratique-vie-associative.html" class="new-window">https://www.associations.gouv.fr/guide-pratique-vie-associative.html</a>'
+  })|raw }}
+</div>
+
+<script>
+  if (typeof bazarTableLists === "undefined" || bazarTableLists.length < 1){
+    var bazarTableLists = [];
+  }
+  {% if param.nbbazarliste %}
+    bazarTableLists.push({{ param.nbbazarliste }});
+  {% endif %}
+</script>
+
+{{ include_javascript('tools/templates/libs/vendor/datatables/dataTables.bootstrap.min.js') }}
+{{ include_javascript('tools/templates/libs/vendor/datatables/jquery.dataTables.min.js') }}
+{{ include_css('tools/templates/libs/vendor/datatables/dataTables.bootstrap.min.css') }}
+{{ include_css('tools/benevolat/styles/benevolat.css') }}

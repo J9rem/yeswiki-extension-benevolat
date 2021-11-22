@@ -1,0 +1,164 @@
+<?php
+
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use YesWiki\Bazar\Service\FormManager ;
+
+// get services
+$formManager = $this->wiki->services->get(FormManager::class);
+$wikiParams = $this->wiki->services->get(ParameterBagInterface::class);
+
+// init vars
+$fieldCache = [];
+$rowTitles = [];
+$dataList = [];
+$dataLinks = [];
+$dataLinks = [];
+$dataTitles = [];
+
+$columnTitles = [_t('BENEVOLAT_BENEVOLE')];
+$columnLinks = [''];
+$columnFieldsIndex = [];
+
+$yearMode = empty($_REQUEST['bf_annee'] ?? $param['bf_annee'] ?? null);
+
+if (!$yearMode){
+    $selectedYear = $_GET['bf_annee'] ?? null;
+}
+
+$formId = $fiches[array_key_first($fiches)]['id_typeannonce'] ?? null;
+$form = $formManager->getOne($formId);
+if (!empty($form)){
+    // get years
+    $fieldCache[$formId]['bf_annee'] = $formManager->findFieldFromNameOrPropertyName('bf_annee',$formId);
+    // get months
+    $fieldCache[$formId]['bf_mois'] = $formManager->findFieldFromNameOrPropertyName('bf_mois',$formId);
+    if ($yearMode) {
+        foreach($fieldCache[$formId]['bf_annee']->getOptions() as $key => $value){
+            array_push($columnTitles,$value);
+            array_push($columnFieldsIndex,$key);
+            $columnLinks[] = $this->wiki->Href('','',
+                [
+                    'bf_annee' =>  $key
+                ],false
+            );
+        }
+    } else {
+        foreach($fieldCache[$formId]['bf_mois']->getOptions() as $key => $value){
+            array_push($columnTitles,$value);
+            array_push($columnFieldsIndex,$key);
+            $columnLinks[] = '';
+        }
+        $selectedYearName = $fieldCache[$formId]['bf_annee']->getOptions()[$selectedYear] ?? $selectedYear;
+    }
+}
+
+array_push($columnTitles,_t('BENEVOLAT_TOTALS'));
+$columnLinks[] = $this->wiki->Href();
+
+foreach($fiches as $entry){
+    $formId = $entry['id_typeannonce'] ?? null;
+    if (!empty($entry['id_fiche']) && !empty($formId)){
+        $form = $formManager->getOne($formId);
+        if (!empty($form)){
+            //getBenevoleField 
+            if (!isset($fieldCache[$formId]['bf_benevole'])){
+                $fieldCache[$formId]['bf_benevole'] = $formManager->findFieldFromNameOrPropertyName('bf_benevole',$formId);
+            }
+
+            $benevoleFieldId = $fieldCache[$formId]['bf_benevole']->getPropertyName();
+
+            // getId
+            $benevoleId = $entry[$benevoleFieldId] ?? null;
+            if (!empty($benevoleId)) {
+                // get benevole name
+                if (!isset($rowTitles[$benevoleId])) {
+                    $benevoleName = isset($fieldCache[$formId]['bf_benevole'])
+                        ? ($fieldCache[$formId]['bf_benevole']->getOptions()[$benevoleId] ?? $benevoleId)
+                        : $benevoleId;
+                    $rowTitles[$benevoleId] = $benevoleName;
+                }
+                $fieldName = ($yearMode) ? 'bf_annee' : 'bf_mois';
+                // get year
+                if (!isset($fieldCache[$formId]['bf_annee'])){
+                    $fieldCache[$formId]['bf_annee'] = $formManager->findFieldFromNameOrPropertyName('bf_annee',$formId);
+                }
+                $yearFieldId = $fieldCache[$formId]['bf_annee']->getPropertyName();
+                $yearFieldKey = $entry[$yearFieldId] ?? null;
+
+                $fieldKey = null;
+                if ($yearMode) {
+                    $fieldKey = $yearFieldKey;
+                    $fieldId = $yearFieldId;
+                } elseif ($yearFieldKey == $selectedYear) {
+
+                    // get month
+                    if (!isset($fieldCache[$formId]['bf_mois'])){
+                        $fieldCache[$formId]['bf_mois'] = $formManager->findFieldFromNameOrPropertyName('bf_mois',$formId);
+                    }
+                    $monthFieldId = $fieldCache[$formId]['bf_mois']->getPropertyName();
+                    $monthFieldKey = $entry[$monthFieldId] ?? null;
+                    $fieldKey = $monthFieldKey;
+                    $fieldId = $monthFieldId;
+                    $yearCatching = '|'.$yearFieldId."=".$yearFieldKey;
+                }
+
+                if (!empty($fieldKey)){
+                    
+                    $dataList[$benevoleId][$fieldKey] = ($dataList[$benevoleId][$fieldKey] ?? 0)
+                    + ($entry['bf_heures'] ?? 0);
+
+                    // update links
+                    if (!isset($dataLinks[$benevoleId][$fieldKey])){
+                        $dataLinks[$benevoleId][$fieldKey] = $this->wiki->Href('',$entry['id_fiche']);
+                    } else {
+                        $dataLinks[$benevoleId][$fieldKey] = $this->wiki->Href('','',
+                            [
+                                'query' => $benevoleFieldId . '=' . $benevoleId.
+                                '|'.$fieldId."=".$fieldKey.
+                                ($yearCatching ?? ''),
+                                'template' => 'liste_accordeon',
+                            ],false
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
+
+// calculate totals
+$thisPageTag = $this->wiki->getPageTag();
+$rowTitles[$thisPageTag] = _t('BENEVOLAT_TOTALS');
+
+foreach($columnFieldsIndex as $propertyName){
+    $dataList[$thisPageTag][$propertyName] = array_sum(
+        array_map(function ($line) use($propertyName){
+            return $line[$propertyName] ?? 0;
+        },$dataList)
+    );
+}
+
+foreach($rowTitles as $key => $title){
+    if (!isset($dataList[$key])){
+        $dataList[$key] = [];
+    }
+    $dataList[$key]['total'] = array_sum($dataList[$key]);
+}
+$columnFieldsIndex[] = 'total';
+
+echo $this->render('@bazar/suivi_benevolat.twig', [
+    'infoRes' => $info_res ?? null,
+    'param' => $param,
+    'columnTitles' => $columnTitles,
+    'columnLinks' => $columnLinks,
+    'rowTitles' => $rowTitles,
+    'columnFieldsIndex' => $columnFieldsIndex,
+    'dataList' => $dataList,
+    'dataLinks' => $dataLinks,
+    'dataLinks' => $dataLinks,
+    'dataTitles' => $dataTitles,
+    'selectedYearName' => ($yearMode) ? null : $selectedYearName,
+    'ajoutBenevolat' => !$wikiParams->has('benevolat') 
+        ? 'AjoutBenevolat' 
+        : ($wikiParams->get('benevolat')['pages']['AjoutBenevolat_tag'] ?? 'AjoutBenevolat'),
+]);
