@@ -21,7 +21,7 @@ Extension to simplify the management of voluntary work's time.
 Into page `GererMisesAJour` of your YesWiki, seek "bénévolat" extension and install it.
 
 
-## Utilisation
+## Usage
 
 Logged as administrator of the YesWiki, click on the button `'Manage \'Benevolat\' extension (Voluntary work)` at the end of the update (handler `/update`). You can find this management interface with handler `/gestionbenevolat`.
 
