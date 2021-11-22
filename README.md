@@ -11,7 +11,7 @@ Connecté en tant qu'administrateur, administratrice du YesWiki, cliquer sur le 
 
 Sur cette interface de gestion, vous pouvez installer les listes, pages, formulaires nécessaires. Vous pouvez aussi changer leur nom.
 
-====
+----
 _English_
 
 Extension to simplify the management of voluntary work's time.
