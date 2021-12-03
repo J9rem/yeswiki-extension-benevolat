@@ -248,18 +248,15 @@ class GestionBenevolatHandler extends YesWikiHandler
             ]);
         }
 
-        $linkedPageUrl = $this->wiki->Href('', $formName === 'Benevole' ?
-            $this->pagesTags['AjoutBenevolat']['new'] :
-            $this->pagesTags['CreationProfilBenevole']['new']);
-        $linkedPageUrl2 = $this->wiki->Href('', $formName === 'Benevole'
-            ? $this->pagesTags['SuiviBenevolat']['new']
-            : '{linkedPageUrl2}');
+        $creationProfilBenevoleUrl = $this->wiki->Href('', $this->pagesTags['CreationProfilBenevole']['new']);
+        $ajoutBenevolatUrl = $this->wiki->Href('', $this->pagesTags['AjoutBenevolat']['new']);
+        $suiviBenevolatUrl = $this->wiki->Href('', $this->pagesTags['SuiviBenevolat']['new']);
         $listeMois = $this->listsIds['ListeMois']['new'];
         $listeAnnees = $this->listsIds['ListeAnnees']['new'];
 
         $formTemplate = str_replace(
-            ['{linkedFormId}','{linkedPageUrl}','{linkedPageUrl2}','{ListeMois}','{ListeAnnees}'],
-            [$linkedFormId,$linkedPageUrl,$linkedPageUrl2,$listeMois,$listeAnnees],
+            ['{linkedFormId}','{creationProfilBenevoleUrl}','{ajoutBenevolatUrl}','{suiviBenevolatUrl}','{ListeMois}','{ListeAnnees}'],
+            [$linkedFormId,$creationProfilBenevoleUrl,$ajoutBenevolatUrl,$suiviBenevolatUrl,$listeMois,$listeAnnees],
             $formTemplate
         );
         
