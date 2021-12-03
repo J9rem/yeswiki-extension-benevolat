@@ -33,20 +33,24 @@ if (!empty($form)){
     // get months
     $fieldCache[$formId]['bf_mois'] = $formManager->findFieldFromNameOrPropertyName('bf_mois',$formId);
     if ($yearMode) {
-        foreach($fieldCache[$formId]['bf_annee']->getOptions() as $key => $value){
-            array_push($columnTitles,$value);
-            array_push($columnFieldsIndex,$key);
-            $columnLinks[] = $this->wiki->Href('','',
-                [
-                    'bf_annee' =>  $key
-                ],false
-            );
+        if (!empty($fieldCache[$formId]['bf_annee'])){
+            foreach($fieldCache[$formId]['bf_annee']->getOptions() as $key => $value){
+                array_push($columnTitles,$value);
+                array_push($columnFieldsIndex,$key);
+                $columnLinks[] = $this->wiki->Href('','',
+                    [
+                        'bf_annee' =>  $key
+                    ],false
+                );
+            }
         }
     } else {
-        foreach($fieldCache[$formId]['bf_mois']->getOptions() as $key => $value){
-            array_push($columnTitles,$value);
-            array_push($columnFieldsIndex,$key);
-            $columnLinks[] = '';
+        if (!empty($fieldCache[$formId]['bf_mois'])){
+            foreach($fieldCache[$formId]['bf_mois']->getOptions() as $key => $value){
+                array_push($columnTitles,$value);
+                array_push($columnFieldsIndex,$key);
+                $columnLinks[] = '';
+            }
         }
         $selectedYearName = $fieldCache[$formId]['bf_annee']->getOptions()[$selectedYear] ?? $selectedYear;
     }
@@ -65,7 +69,7 @@ foreach($fiches as $entry){
                 $fieldCache[$formId]['bf_benevole'] = $formManager->findFieldFromNameOrPropertyName('bf_benevole',$formId);
             }
 
-            $benevoleFieldId = $fieldCache[$formId]['bf_benevole']->getPropertyName();
+            $benevoleFieldId = (empty($fieldCache[$formId]['bf_benevole'])) ? null : $fieldCache[$formId]['bf_benevole']->getPropertyName();
 
             // getId
             $benevoleId = $entry[$benevoleFieldId] ?? null;
