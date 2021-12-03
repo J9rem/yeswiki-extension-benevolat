@@ -322,11 +322,14 @@ class GestionBenevolatHandler extends YesWikiHandler
             if (!isset($tmp['forms'])) {
                 $tmp['forms'] = [];
             }
-            $tmp['forms'][$formName.'_id'] = $formId;
             
+            $this->formsIds[$formName] = $formId;
+            foreach ($this->formsIds as $formNameLocal => $formIdLocal) {
+                $tmp['forms'][$formNameLocal.'_id'] = $formIdLocal;
+            }
+
             $config->$baseKey = $tmp;
             $config->write();
-            $this->formsIds[$formName] = $formId;
 
             unset($config);
             return $formId;
