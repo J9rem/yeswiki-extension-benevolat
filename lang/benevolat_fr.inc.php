@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['translations'] = array_merge($GLOBALS['translations']??[], [
+return [
     'BENEVOLAT_BENEVOLE' => 'Bénévole',
     'BENEVOLAT_TOTALS' => 'Totaux',
     'BENEVOLAT_BENEVOLE_TIME' => 'Temps bénévole de {benevoleId} pour {period}',
@@ -32,4 +32,4 @@ $GLOBALS['translations'] = array_merge($GLOBALS['translations']??[], [
     'BENEVOLAT_NAME_TO_USE' => 'Nom à utiliser',
     'BENEVOLAT_EXPLICATIONS_SUIVI' => "La valorisation du bénévolat peut avoir plusieurs bonnes raisons dont 'soigner la communication externe', 'suivre les compétences internes', 'mettre en avant l'aspect non lucratif' ...\n".
         "Retrouvez tous les détails dans le guide 'Bénévolat : valorisation comptable' disponible ici : https://www.associations.gouv.fr/guide-pratique-vie-associative.html",
-]);
+];

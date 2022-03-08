@@ -1,6 +1,6 @@
 <?php
 
-$GLOBALS['translations'] = array_merge($GLOBALS['translations']??[], [
+return [
     'BENEVOLAT_BENEVOLE' => 'Volunteer',
     'BENEVOLAT_TOTALS' => 'Totals',
     'BENEVOLAT_BENEVOLE_TIME' => 'Voluntary time of {benevoleId} for {period}',
@@ -32,4 +32,4 @@ $GLOBALS['translations'] = array_merge($GLOBALS['translations']??[], [
     'BENEVOLAT_NAME_TO_USE' => 'Name to use',
     'BENEVOLAT_EXPLICATIONS_SUIVI' => "The valorization of voluntary work can have sevveral good reasons like 'being careful to the external communication', 'following internal skills', 'highlighting not profitable status of the organization' ...\n".
         "In France, it is possible to find useful information into the guide 'Bénévolat : valorisation comptable' available here : https://www.associations.gouv.fr/guide-pratique-vie-associative.html",
-]);
+];
