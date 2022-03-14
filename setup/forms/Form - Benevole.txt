@@ -1,6 +1,10 @@
 titre***{{bf_prenom}} {{bf_nom}}***Identifiant bénévole***
 texte***bf_prenom***Prénom*** *** *** *** ***text***1*** *** *** * *** * *** *** *** ***
 texte***bf_nom***Nom*** *** *** *** ***text***1*** *** *** * *** * *** *** *** ***
+texte***bf_adresse***Adresse*** *** *** *** ***text***0*** *** *** % *** % *** *** *** ***
+texte***bf_adresse_1***Complément d'adresse*** *** *** *** ***text***0*** *** *** % *** % *** *** *** ***
+texte***bf_codepostal***Code postal***6***6*** *** ***text***0*** *** *** % *** % *** *** *** ***
+texte***bf_ville***Ville*** *** *** *** ***text***0*** *** *** % *** % *** *** *** ***
 labelhtml*** *** ***<a href="{ajoutBenevolatUrl}" class="btn btn-primary btn-xs"><i class="fas fa-plus-circle"></i> Saisir une fiche bénévolat</a>&nbsp;***
 labelhtml***Fiches de bénévolat*** ***<a href="{suiviBenevolatUrl}" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i> Suivi du bénévolat</a><br>Fiches de bénévolat***
 listefiches***{linkedFormId}*** *** *** *** *** ***

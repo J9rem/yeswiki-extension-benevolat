@@ -32,4 +32,28 @@ return [
     'BENEVOLAT_NAME_TO_USE' => 'Nom à utiliser',
     'BENEVOLAT_EXPLICATIONS_SUIVI' => "La valorisation du bénévolat peut avoir plusieurs bonnes raisons dont 'soigner la communication externe', 'suivre les compétences internes', 'mettre en avant l'aspect non lucratif' ...\n".
         "Retrouvez tous les détails dans le guide 'Bénévolat : valorisation comptable' disponible ici : https://www.associations.gouv.fr/guide-pratique-vie-associative.html",
+
+    // handlers/GestionBenevolatHandler.php
+    'BENEVOLAT_UPDATE_CONTACT_DETAILS' => 'Mise à jour réussie des coordonnées de l\'association',
+
+    // handlers/SuiviAnnuelHandler.php
+    'BENEVOLAT_THIS_HANDLER_IS_ONLY_USABLE_FOR_ENTRIES' => 'Cet handler n\'est utilisable que pour les fiches bazar !',
+    'BENEVOLAT_THIS_HANDLER_IS_ONLY_USABLE_FOR_VOLUNTEER_ENTRIES' => 'Cet handler n\'est utilisable que pour les fiches bazar du formulaire \'Benevole\' !',
+
+    // templates/gestion-benevolat.twig
+    'BENEVOLAT_ASSOCIATION_CONTACT_DETAILS' => 'Coordonnées de l\'association',
+    'BENEVOLAT_ASSOCIATION_NAME' => 'Nom :',
+    'BENEVOLAT_ASSOCIATION_ADDRESS' => 'Adresse :',
+    'BENEVOLAT_ASSOCIATION_ADDRESS_COMPLEMENT' => 'Complément d\'adresse :',
+    'BENEVOLAT_ASSOCIATION_POSTAL_CODE' => 'Code postal :',
+    'BENEVOLAT_ASSOCIATION_TOWN' => 'Ville :',
+
+    // templates/suivi-annuel-handler.twig
+    'BENEVOLAT_SUIVI_ANNUEL_TITLE' => 'Suivi annuel du bénévolat',
+    'BENEVOLAT_ASSOCIATION' => 'Association',
+    'BENEVOLAT_VOLUNTEER' => 'Bénévole',
+    'BENEVOLAT_DATE' => 'Date',
+    'BENEVOLAT_DESIGNATION' => 'Désignation',
+    'BENEVOLAT_HOURS' => 'Heures',
+    'BENEVOLAT_TOTAL' => 'Total',
 ];

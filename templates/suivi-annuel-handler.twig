@@ -1,0 +1,65 @@
+{{ error|raw }}
+
+<h1>{{ _t('BENEVOLAT_SUIVI_ANNUEL_TITLE') }}</h1>
+
+{# TODO display year #}
+{# TODO display select year (be carefull to print) #}
+
+{# two cols #}
+<div class="contact-details-block">
+  <div>
+    <h5>{{ _t('BENEVOLAT_ASSOCIATION') }}</h5>
+    <div class="well">
+      {{ contactDetails.associationName }}<br/>
+      {{ contactDetails.associationAddress }}<br/>
+      {{ contactDetails.associationAddressComplement }}<br/>
+      {{ contactDetails.associationPostalCode }} {{ contactDetails.associationTown }}
+    </div>
+  </div>
+  <div>
+    <h5>{{ _t('BENEVOLAT_VOLUNTEER') }}</h5>
+    <div class="well">
+      {{ entry.bf_prenom }} {{ entry.bf_nom }}<br/>
+      {{ entry.bf_adresse }}<br/>
+      {{ entry_bf_adresse_1 }}<br/>
+      {{ entry.bf_codepostal }} {{ entry.bf_ville }}
+    </div>
+  </div>
+</div>
+
+<hr>
+{# datatable #}
+
+<table class="table tabletable-condensed display">
+  <thead>
+    <tr>
+      <th>{{ _t('BENEVOLAT_DATE') }}</th>
+      <th class="prevent-sorting designation-column" data-width="100%">{{ _t('BENEVOLAT_DESIGNATION') }}</th>
+      <th class="prevent-sorting">{{ _t('BENEVOLAT_HOURS') }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set sum = 0 %}
+    {% for entry in tasks %}
+      <tr>
+        <td data-order="{{ entry[translatedKeys.bf_annee] }}/{{ entry[translatedKeys.bf_mois] }}/01">{{ entry[translatedKeys.bf_mois] }}/{{ entry[translatedKeys.bf_annee] }}</td>
+        <td>{{ entry.bf_description }}</td>
+        <td>{{ entry.bf_heures }}</td>
+        {% set sum = sum + entry.bf_heures %}
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tfooter>
+    <tr>
+      <td></td>
+      <td style="text-align:right;"><b>{{ _t('BENEVOLAT_TOTAL') }} :</b></td>
+      <td><b>{{ sum }}</b></td>
+    </tr>
+  </tfooter>
+</table>
+
+{{ include_javascript('javascripts/vendor/datatables-full/jquery.dataTables.min.js') }}
+{{ include_css('styles/vendor/datatables-full/dataTables.bootstrap.min.css') }}
+{{ include_css('tools/benevolat/styles/suivi-annuel.css') }}
+
+{# form to sign except if no year selected #}

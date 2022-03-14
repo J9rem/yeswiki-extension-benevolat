@@ -32,6 +32,7 @@ class GestionBenevolatHandler extends YesWikiHandler
     private $formsIds ;
     private $pagesTags ;
     private $listsIds ;
+    private $contactDetails;
 
     public function run()
     {
@@ -62,6 +63,17 @@ class GestionBenevolatHandler extends YesWikiHandler
             $this->pagesTags[$pageTag] = [
                 'new' => $this->params->get('benevolat')['pages'][$pageTag.'_tag'] ?? $pageTag
             ];
+        }
+
+        // init contact Details
+        foreach ([
+            'associationName',
+            'associationAddress',
+            'associationAddressComplement',
+            'associationPostalCode',
+            'associationTown'
+        ] as $paramName) {
+            $this->contactDetails[$paramName] = $this->params->get('benevolat')['contactDetails'][$paramName] ?? '';
         }
 
         if (isset($_POST['valider'])) {
@@ -99,6 +111,7 @@ class GestionBenevolatHandler extends YesWikiHandler
             'listsTags' => $listsTags,
             'formsIds' => $this->formsIds,
             'pagesTags' => $this->pagesTags ,
+            'contactDetails' => $this->contactDetails,
         ]);
     }
 
@@ -126,6 +139,9 @@ class GestionBenevolatHandler extends YesWikiHandler
         }
         if (isset($_POST['updatePageRapideHaut']) && in_array($_POST['updatePageRapideHaut'], [1,'1'], true)) {
             $output .= $this->updatePageRapideHaut();
+        }
+        if (isset($_POST['contactDetails']) && !empty($_POST['contactDetails']) && is_array($_POST['contactDetails'])) {
+            $output .= $this->updateContactDetails($_POST['contactDetails']);
         }
         return $output;
     }
@@ -525,5 +541,46 @@ class GestionBenevolatHandler extends YesWikiHandler
         }
 
         return null;
+    }
+
+    private function updateContactDetails(array $newContactDetails)
+    {
+        $configNeedsToBeUpdated = false;
+        // update contact Details
+        foreach ([
+            'associationName',
+            'associationAddress',
+            'associationAddressComplement',
+            'associationPostalCode',
+            'associationTown'
+        ] as $paramName) {
+            $newValue = trim($newContactDetails[$paramName]);
+            if ((!empty($newValue) || !empty($this->contactDetails[$paramName])) &&
+                $newValue !== $this->contactDetails[$paramName]) {
+                $configNeedsToBeUpdated = true;
+                $this->contactDetails[$paramName] = $newValue;
+            }
+        }
+
+        if ($configNeedsToBeUpdated) {
+            // save config
+            
+            include_once 'tools/templates/libs/Configuration.php';
+            $config = new Configuration('wakka.config.php');
+            $config->load();
+
+            $baseKey = 'benevolat';
+            $tmp = isset($config->$baseKey) ? $config->$baseKey : [];
+            $tmp['contactDetails'] = $this->contactDetails;
+
+            $config->$baseKey = $tmp;
+            $config->write();
+            unset($config);
+            
+            return $this->render('@templates/alert-message.twig', [
+                'type' => 'success',
+                'message' => _t('BENEVOLAT_UPDATE_CONTACT_DETAILS'),
+            ]);
+        }
     }
 }

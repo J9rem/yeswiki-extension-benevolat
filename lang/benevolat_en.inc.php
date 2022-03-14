@@ -32,4 +32,28 @@ return [
     'BENEVOLAT_NAME_TO_USE' => 'Name to use',
     'BENEVOLAT_EXPLICATIONS_SUIVI' => "The valorization of voluntary work can have sevveral good reasons like 'being careful to the external communication', 'following internal skills', 'highlighting not profitable status of the organization' ...\n".
         "In France, it is possible to find useful information into the guide 'Bénévolat : valorisation comptable' available here : https://www.associations.gouv.fr/guide-pratique-vie-associative.html",
+
+    // handlers/GestionBenevolatHandler.php
+    'BENEVOLAT_UPDATE_CONTACT_DETAILS' => 'Update of association contact details succeeded',
+
+    // handlers/SuiviAnnuelHandler.php
+    'BENEVOLAT_THIS_HANDLER_IS_ONLY_USABLE_FOR_ENTRIES' => 'This handler is only usable on bazar entries!',
+    'BENEVOLAT_THIS_HANDLER_IS_ONLY_USABLE_FOR_VOLUNTEER_ENTRIES' => 'This handler is only usable on entries from \'Benevole\' form!',
+
+    // templates/gestion-benevolat.twig
+    'BENEVOLAT_ASSOCIATION_CONTACT_DETAILS' => 'Association\'s contact details',
+    'BENEVOLAT_ASSOCIATION_NAME' => 'Name :',
+    'BENEVOLAT_ASSOCIATION_ADDRESS' => 'Address :',
+    'BENEVOLAT_ASSOCIATION_ADDRESS_COMPLEMENT' => 'Address details :',
+    'BENEVOLAT_ASSOCIATION_POSTAL_CODE' => 'Postal code :',
+    'BENEVOLAT_ASSOCIATION_TOWN' => 'Town :',
+
+    // templates/suivi-annuel-handler.twig
+    'BENEVOLAT_SUIVI_ANNUEL_TITLE' => 'Voluntary work, annually details',
+    'BENEVOLAT_ASSOCIATION' => 'Association',
+    'BENEVOLAT_VOLUNTEER' => 'Volunteer',
+    'BENEVOLAT_DATE' => 'Date',
+    'BENEVOLAT_DESIGNATION' => 'Designation',
+    'BENEVOLAT_HOURS' => 'Hours',
+    'BENEVOLAT_TOTAL' => 'Total',
 ];

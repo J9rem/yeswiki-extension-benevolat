@@ -1,0 +1,31 @@
+.dt-buttons button.buttons-print{
+    display:none;
+}
+
+.contact-details-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.contact-details-block > div {
+    flex-grow: 1;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+@media print{
+    #yw-topnav ,
+    .footer,
+    #yw-footer,
+    .debug {
+        display:none ;
+    }
+    .row.dataTables_footer,
+    .row.dataTables_header{
+        display:none !important;
+    }
+    table {
+        width: 100% !important;
+    }
+}
